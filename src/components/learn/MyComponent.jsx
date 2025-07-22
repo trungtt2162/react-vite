@@ -1,7 +1,7 @@
-
+import './style.css'
 const MyComponent = () => {
     return (
-        <div>First Component</div>
+        <div className='hi'>First Component</div>
     );
 }
 
