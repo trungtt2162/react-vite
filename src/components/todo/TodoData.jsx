@@ -1,16 +1,22 @@
 import './todo.css'
 
 const TodoData = (props) => {
-    const { todoList } = props;
+    const { todoList, deleteTodo } = props;
+
+
+    const handleClick = (todoDeleteId) => {
+        deleteTodo(todoDeleteId);
+    }
+
     return (
         <div className='todo-data'>
             {todoList.map((item, index) => {
                 return (
                     <div className="todo-item" key={item.id}>
-                        {index + 1}. {item.name}
+                        {item.id}. {item.name}
                         <button className='button'
                             style={{ cursor: "pointer" }}
-                        // onClick={handleClick}
+                            onClick={() => handleClick(item.id)}
                         >
                             Delete
                         </button>
