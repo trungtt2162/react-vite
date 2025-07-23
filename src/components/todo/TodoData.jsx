@@ -1,12 +1,22 @@
+import './todo.css'
 
 const TodoData = (props) => {
-    const { name, age, data } = props;
+    const { todoList } = props;
     return (
         <div className='todo-data'>
-            <div>Name: {name}</div>
-            <div>Age: {age}</div>
-            <div>Address: {data.address}</div>
-            <div>Country: {data.country}</div>
+            {todoList.map((item, index) => {
+                return (
+                    <div className="todo-item" key={item.id}>
+                        {index + 1}. {item.name}
+                        <button className='button'
+                            style={{ cursor: "pointer" }}
+                        // onClick={handleClick}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                );
+            })}
         </div>
     );
 }
