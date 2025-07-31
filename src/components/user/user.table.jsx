@@ -1,82 +1,47 @@
+import { DeleteOutlined, EditOutlined, TranslationOutlined } from "@ant-design/icons";
 import { Space, Table, Tag } from "antd";
-import React from 'react';
+import { React } from 'react';
 
 
 
-const UserTable = () => {
+const UserTable = (props) => {
+
+    const { dataUser } = props;
     const columns = [
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            render: text => <a>{text}</a>,
+            title: 'Id',
+            dataIndex: '_id',
+            key: 'id',
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
+            title: 'Full Name',
+            dataIndex: 'fullName',
+            key: 'fullName',
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
         },
         {
-            title: 'Tags',
-            key: 'tags',
-            dataIndex: 'tags',
-            render: (_, { tags }) => (
-                <>
-                    {tags.map(tag => {
-                        let color = tag.length > 5 ? 'geekblue' : 'green';
-                        if (tag === 'loser') {
-                            color = 'volcano';
-                        }
-                        return (
-                            <Tag color={color} key={tag}>
-                                {tag.toUpperCase()}
-                            </Tag>
-                        );
-                    })}
-                </>
-            ),
+            title: 'Phone Number',
+            dataIndex: 'phone',
+            key: 'phone',
         },
         {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
-                <Space size="middle">
-                    <a>Invite {record.name}</a>
-                    <a>Delete</a>
-                </Space>
+                <div style={{ display: "flex", gap: "10px" }}>
+                    <a> <EditOutlined style={{ cursor: "pointer" }} /></a>
+                    <a> <DeleteOutlined style={{ cursor: "pointer", color: "red" }} /></a>
+                </div>
             ),
         },
-    ];
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sydney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
+
     ];
     return (
-        <Table columns={columns} dataSource={data} />
+        <Table columns={columns} dataSource={dataUser} rowKey={"_id"} />
     )
 }
 

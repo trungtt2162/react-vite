@@ -2,7 +2,7 @@
 
 const BookPage = () => {
     return (
-        <div>Product Page</div>
+        <div>Book Page</div>
     )
 }
 
