@@ -23,6 +23,7 @@ const UserPage = () => {
                 fetchAllUser={fetchAllUser}
             />
             <UserTable
+                fetchAllUser={fetchAllUser}
                 dataUser={dataUser}
             />
         </div>
