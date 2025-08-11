@@ -1,42 +1,25 @@
-import { Drawer, Input, Modal, notification } from "antd";
+import { Button, Drawer, Image, Input, Modal, notification } from "antd";
 import { useEffect, useState } from "react";
 import { updateUserAPI } from "../../services/api.service";
-
+import.meta.env.VITE_BACKEND_URL
 const ViewUserModal = (props) => {
     const { isModalViewOpen, setIsModalViewOpen, dataUpdate, setDataUpdate, fetchAllUser } = props;
     const [id, setID] = useState("");
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-
+    const [avatar, setAvatar] = useState("");
     useEffect(
         () => {
             if (dataUpdate) {
                 setID(dataUpdate._id);
                 setFullName(dataUpdate.fullName);
                 setEmail(dataUpdate.email);
-                setPhoneNumber(dataUpdate.phone)
+                setPhoneNumber(dataUpdate.phone);
+                setAvatar(dataUpdate.avatar);
             }
         }, [dataUpdate]
     )
-    // const handleClickButton = async () => {
-    //     const res = await updateUserAPI(id, fullName, phoneNumber);
-    //     if (res.data) {
-
-    //         notification.success({
-    //             message: "Update User",
-    //             description: "Cap nhat user thanh cong"
-    //         })
-    //         resetCloseModal();
-    //         await fetchAllUser();
-    //     }
-    //     else {
-    //         notification.error({
-    //             message: "Error Create User",
-    //             description: JSON.stringify(res.message)
-    //         })
-    //     }
-    // }
 
     const resetCloseModal = () => {
         setIsModalViewOpen(false);
@@ -52,6 +35,7 @@ const ViewUserModal = (props) => {
     return (
         <div>
             <Drawer
+                width={"40vw"}
                 title="Profile User"
                 closable={true}
                 open={isModalViewOpen}
@@ -68,10 +52,17 @@ const ViewUserModal = (props) => {
                     <div>
                         Email: {email}
                     </div>
-                    <span>Phone Number:</span>
                     <div>
-                        <Input value={phoneNumber} />
+                        Phone Number:{phoneNumber}
                     </div>
+                    <div>
+                        <Image
+                            height={400} width={400}
+                            src={`${import.meta.env.VITE_BACKEND_URL}/images/avatar/${avatar}`} />
+                    </div>
+                    <Button type="primary" style={{ width: "200px" }}>
+                        Upload Avatar
+                    </Button>
                 </div>
             </Drawer>
         </div>
