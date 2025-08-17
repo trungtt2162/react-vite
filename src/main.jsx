@@ -31,16 +31,18 @@ const router = createBrowserRouter([
         path: "/books",
         element: <BookPage />,
       },
+      {
+        path: "/register",
+        element: <RegisterPage />
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
     ]
   },
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/register",
-    element: <RegisterPage />
-  }
+
+
 ]);
 
 

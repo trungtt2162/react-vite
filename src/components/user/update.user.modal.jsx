@@ -7,18 +7,19 @@ const UpdateUserModal = (props) => {
     const [id, setID] = useState("");
     const [fullName, setFullName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-
+    const [avatar, setAvatar] = useState("");
     useEffect(
         () => {
             if (dataUpdate) {
                 setID(dataUpdate._id);
                 setFullName(dataUpdate.fullName);
-                setPhoneNumber(dataUpdate.phone)
+                setPhoneNumber(dataUpdate.phone);
+                setAvatar(dataUpdate.avatar);
             }
         }, [dataUpdate]
     )
     const handleClickButton = async () => {
-        const res = await updateUserAPI(id, fullName, phoneNumber);
+        const res = await updateUserAPI(id, fullName, phoneNumber, avatar);
         if (res.data) {
 
             notification.success({
@@ -41,6 +42,7 @@ const UpdateUserModal = (props) => {
         setFullName("");
         setPhoneNumber("");
         setID("");
+        setAvatar("");
         setDataUpdate(null)
     }
     const handleCancel = () => {

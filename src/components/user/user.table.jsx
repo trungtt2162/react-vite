@@ -8,14 +8,13 @@ import { deleteUserAPI } from "../../services/api.service";
 
 
 const UserTable = (props) => {
-    const { fetchAllUser } = (props)
+    const { fetchAllUser, current, setCurrent, pageSize, setPageSize, total } = (props)
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [isModalViewOpen, setIsModalViewOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState("");
     const { dataUser } = props;
     const confirmDelete = async (id) => {
         const res = await deleteUserAPI(id);
-        console.log(">res:", res);
         if (res.data) {
             notification.success({
                 message: "Delete User",
@@ -30,9 +29,34 @@ const UserTable = (props) => {
             })
         }
     };
+    const onChange = (pagination, filters, sorter, extra) => {
+        console.log(pagination);
+        if (pagination && pagination.current) {
+            if (+pagination.current !== +current) {
+                setCurrent(+pagination.current);
+            }
+        }
+        if (pagination && pagination.pageSize) {
+            if (+pagination.pageSize !== +pageSize) {
+                setPageSize(+pagination.pageSize);
+            }
+        }
+    };
+
     const columns = [
         {
-            title: 'Id',
+            title: 'STT',
+            render: (_, record, index) => {
+                return (
+                    <>
+                        {(index + 1) + (current - 1) * pageSize}
+                    </>
+                )
+            }
+
+        },
+        {
+            title: 'ID',
             dataIndex: '_id',
             key: 'id',
             onCell: (record) => ({
@@ -43,22 +67,22 @@ const UserTable = (props) => {
             })
         },
         {
-            title: 'Full Name',
+            title: 'FULL NAME',
             dataIndex: 'fullName',
             key: 'fullName',
         },
         {
-            title: 'Email',
+            title: 'EMAIL',
             dataIndex: 'email',
             key: 'email',
         },
         {
-            title: 'Phone Number',
+            title: 'PHONE NUMBER',
             dataIndex: 'phone',
             key: 'phone',
         },
         {
-            title: 'Action',
+            title: 'ACTION',
             key: 'action',
             render: (_, record) => (
                 <div style={{ display: "flex", gap: "10px" }}>
@@ -98,7 +122,20 @@ const UserTable = (props) => {
                 setIsModalViewOpen={setIsModalViewOpen}
                 setDataUpdate={setDataUpdate}
             />
-            <Table columns={columns} dataSource={dataUser} rowKey={"_id"} />
+            <Table
+                pagination={
+                    {
+                        current: current,
+                        pageSize: pageSize,
+                        showSizeChanger: true,
+                        total: total,
+
+                        showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>) }
+                    }}
+                onChange={onChange}
+                columns={columns}
+                dataSource={dataUser}
+                rowKey={"_id"} />
         </>
     )
 }
