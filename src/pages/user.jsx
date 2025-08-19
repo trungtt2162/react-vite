@@ -24,7 +24,6 @@ const UserPage = () => {
             setPageSize(res.data.meta.pageSize);
         }
     }
-    console.log("check current", current);
     return (
         <div>
             <UserForm

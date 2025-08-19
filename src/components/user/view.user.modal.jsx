@@ -35,7 +35,6 @@ const ViewUserModal = (props) => {
             setSelectedFile(file)
             setPreview(URL.createObjectURL(file))
         }
-        console.log("check prv", preview)
 
         // setSelectedFile(event.target.files[0])
     }

@@ -1,14 +1,36 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Navigate, useNavigate } from 'react-router-dom';
 // import './header.css' 
-import { Menu } from 'antd';
-import { BookOutlined, HomeFilled, ProductOutlined, SettingOutlined, UserAddOutlined, UserOutlined, UserSwitchOutlined } from '@ant-design/icons';
-import { Children, useState } from 'react';
+import { Menu, message } from 'antd';
+import { BookOutlined, HomeFilled, LoginOutlined, LogoutOutlined, AliwangwangOutlined, SettingOutlined, UserAddOutlined, UserOutlined, UserSwitchOutlined } from '@ant-design/icons';
+import { Children, useContext, useState } from 'react';
+import { AuthContext } from '../context/auth.context';
+import { logoutUserAPI } from '../../services/api.service';
 const Header = () => {
     const [current, setCurrent] = useState('mail');
+    const { user, setUser } = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const onClick = e => {
-        console.log('click ', e);
         setCurrent(e.key);
     };
+    const handleLogout = async () => {
+        const res = await logoutUserAPI();
+        if (res.data) {
+            localStorage.removeItem("access_token");
+            setUser({
+                email: "",
+                phone: "",
+                fullName: "",
+                role: "",
+                avatar: "",
+                id: "",
+            })
+            message.success("Logout success")
+            navigate("/");
+        } else {
+            message.error(res.data.message)
+        }
+    }
     const items =
         [
             {
@@ -26,23 +48,27 @@ const Header = () => {
                 key: 'book',
                 icon: <BookOutlined />,
             },
-            {
-                label: "Setting",
+
+            ...(!user.id ? [{
+                label: <Link to={"/login"}>Log in</Link>,
+                key: 'login',
+                icon: <LoginOutlined />,
+            }
+            ] : []),
+            ...(user.id ? [{
+                label: `Welcome ${user.fullName}`,
                 key: 'setting',
-                icon: <SettingOutlined />,
+                icon: <AliwangwangOutlined />,
                 children: [
                     {
-                        label: <Link to={"/register"}>Sign In</Link>,
-                        key: 'register',
-                        icon: <UserSwitchOutlined />,
-                    },
-                    {
-                        label: <Link to={"/login"}>Login</Link>,
+                        label: <span onClick={() => handleLogout()}>Log out</span>,
                         key: 'login',
-                        icon: <UserSwitchOutlined />,
+                        icon: <LogoutOutlined />,
                     }
                 ]
-            },
+            }
+            ] : [])
+            ,
         ]
     return (
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />

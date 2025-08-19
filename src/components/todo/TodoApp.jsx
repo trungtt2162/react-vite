@@ -15,7 +15,6 @@ const TodoApp = () => {
     const deleteTodo = (todoDeleteID) => {
         const newTodoList = todoList.filter((todoList) => todoList.id !== todoDeleteID)
         setTodoList(newTodoList);
-        console.log("new list:", newTodoList)
     }
     const addNewTodo = (name) => {
         const randomNumber = randomIntFromInterval(1, 100);

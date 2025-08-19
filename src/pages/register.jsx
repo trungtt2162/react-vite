@@ -9,7 +9,6 @@ const RegisterPage = () => {
 
     const onFinish = async (values) => {
         const resRegister = await registerUserAPI(values.fullName, values.email, values.password, values.phoneNumber);
-        console.log(">check api register", resRegister);
         if (resRegister.data) {
             notification.success({
                 message: "Register User",
