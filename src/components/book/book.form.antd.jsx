@@ -91,6 +91,7 @@ const BookFormUncontrolled = (props) => {
                         title="Create New Book"
                         closable={{ 'aria-label': 'Custom Close Button' }}
                         open={isModalOpen}
+
                         // onOk={() => handleClickButton()}
                         onOk={() => formCreateBook.submit()}
                         onCancel={() => handleCancel()}

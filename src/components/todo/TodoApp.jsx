@@ -27,7 +27,7 @@ const TodoApp = () => {
     return (
         <div className="todo-container">
 
-            <div className="todo-tittle">TO DO LIST</div>
+            <div className="todo-tittle">LEARN REACT WITH TAN TRUNG</div>
             <TodoNew
                 addNewTodo={addNewTodo}
             />
